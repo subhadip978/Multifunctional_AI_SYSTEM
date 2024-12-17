@@ -11,8 +11,8 @@ const prisma=new PrismaClient();
 
 
 cloudinary.config({ 
-	cloud_name:  process.env.CLOUDINARY_CLOUD_NAME , 
-	api_key:     process.env.CLOUDINARY_API_KEY , 
+	cloud_name:  process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME , 
+	api_key:     process.env.CLOUDINARY_API_KEY, 
 	api_secret:  process.env.CLOUDINARY_API_SECRET
 });
 
@@ -23,7 +23,7 @@ interface CloudinaryUploadResult{
 
 }
 
-// (async function() {
+
 
     
  
@@ -71,19 +71,22 @@ export async function POST(request:NextRequest){
 
 	try {
 
-		const formData= request.formData();
-		const file=  (await formData).get("file") as File | null;
+		const formData=await  request.formData();
+		const file=  ( formData).get("file") as File | null;
 
 		if(!file){
 			return NextResponse.json({error:"File not found"},{status:400})
 		}
 		const bytes=await file.arrayBuffer();
 		const buffer= Buffer.from(bytes);
+		console.log("uploading start");
+		console.log("Cloudinary Config:", cloudinary.config());
+
 
        const result= await new Promise<CloudinaryUploadResult>(
             (resolve,reject)=>{
              const uploadStream=   cloudinary.uploader.upload_stream(
-                    {folder:"next-clouudinary-uploads"},
+                    {folder:"next-cloudinary-uploads"},
                     (error,result)=>{
                         if(error)reject(error);
                         else resolve(result as CloudinaryUploadResult)
@@ -95,7 +98,7 @@ export async function POST(request:NextRequest){
 
             }
         )
-        return NextResponse.json({result},{status:200})
+        return NextResponse.json({publicId:result.public_id},{status:200})
 		
 	} catch (error) {
         console.log("Upload image failed",error);

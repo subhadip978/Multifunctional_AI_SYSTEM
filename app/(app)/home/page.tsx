@@ -1,8 +1,8 @@
-
-import React, { useEffect, useState } from 'react'
-
+"use client"
+import React, { useCallback, useEffect, useState } from 'react'
 import {Video} from '@/types/index'
 import axios from 'axios'
+import VideoCard from '@/components/VideoCard';
 
 
 
@@ -14,16 +14,12 @@ export default function page(){
 	const fetchVideos=async()=>{
 		try {
 			const response = await axios.get("/api/videos")
-
 			setvideos(response.data)
 
 			
-		} catch (error) {
-			
+		} catch (error) {			
 			console.log(error);
-			throw new Error("Unexpected response format");
-
-			
+			throw new Error("Unexpected response format");			
 			
 		}
 	}
@@ -36,22 +32,25 @@ export default function page(){
 
 	},[])
 
-	const handleDownload=()=>{
-		try {
+	const handleDownload=useCallback((url:string,title:string)=>{
+	
 
 			const link= document.createElement("a");
+			link.href=url;
+			link.setAttribute("download",`${title}.mp4`);
+			document.appendChild(link);
+			link.click();
+			document.removeChild(link);
 
 			
 
 			
-		} catch (error) {
-			
-		}
-	}
+		
+	},[])
 
 	return (
 
-		<div>Home
+		<div>
 			<div>
 				<h1>HOMEPAGE</h1>
 				{videos.length ===0?(
@@ -62,9 +61,14 @@ export default function page(){
 				):(
 					<>
 					{
-						videos.map(()=>{
+						videos.map((video)=>{
 							<div>
-								video
+								<VideoCard 
+								key={video.id}
+								video={video}
+								onDownload={handleDownload}
+
+								/>
 							</div>
 						})
 					}

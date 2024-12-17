@@ -10,7 +10,7 @@ export default function Home() {
   <div>
     <div>
 
-    <h2 className="text-white">
+    <h2 className="text-black">
 
     Multifunctional AI SYSTEM 
     </h2>
