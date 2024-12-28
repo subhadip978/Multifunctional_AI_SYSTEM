@@ -1,14 +1,17 @@
 "use client"
 
 
+import { SignedOut, useClerk, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react'
+import { LogOut } from 'lucide-react';
 
 const sidebarItems=[
 	{route:"/home",  label:"Home Page"},
 	{route:"/social-share", label:"Social Share"},
-	{route:"/video-upload", label:"Video Upload"}
+	{route:"/video-upload", label:"Video Upload"},
+	{route:"/document-upload",label:"DOC Upload"}
 ]
 
 export default function AppLayout({
@@ -18,14 +21,30 @@ export default function AppLayout({
   }>){
 
 	const pathname= usePathname();
+	const {signOut}=useClerk();
+	const { user } =  useUser();
+    console.log("user is ",user)
 
+	const handleSignout=async()=>{
+		await signOut();
+	}
 
 
   return (
-	<div className='flex   '>
+	<div className='flex  flex-col '>
+		{/* navbar */}
+			<nav>
+				<ul className='flex text-black justify-end gap-8'>
+					<li>{user?.username || user?.emailAddresses[0].emailAddress}</li>
+					<li><button onClick={handleSignout}>
+					<LogOut />
+						</button>
+						  </li>
+					<li></li>
+				</ul>
+			</nav>
+	 <div className='flex  h-screen min-w-[200px]'>
 
-
-	<div className='flex  h-screen min-w-[200px]'>
 
 		<ul className='flex flex-col space-y-6'>
 

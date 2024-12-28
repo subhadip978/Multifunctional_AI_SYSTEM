@@ -7,11 +7,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures=["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector(map: "vector", schema: "public")]
 }
 
 
@@ -27,3 +29,21 @@ model Video{
   createdAt       DateTime  @default(now())
   updatedAt       DateTime @updatedAt
 }
+
+
+
+
+
+
+
+
+
+
+model Doc{
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  embedding     Unsupported("vector(3)")?
+
+}
+

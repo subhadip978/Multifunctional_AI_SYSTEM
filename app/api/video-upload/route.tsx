@@ -7,7 +7,7 @@ import {v2 as cloudinary} from 'cloudinary'
 const prisma= new PrismaClient();
 
 cloudinary.config({ 
-	cloud_name:  process.env.CLOUDINARY_CLOUD_NAME , 
+	cloud_name:  process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME , 
 	api_key:     process.env.CLOUDINARY_API_KEY , 
 	api_secret:  process.env.CLOUDINARY_API_SECRET
 });
@@ -58,7 +58,7 @@ export  async function POST(request:NextRequest){
 				if(error) reject(error)
 				else resolve(result as CloudinaryResult);			
 	})
-	stream.end(Buffer);
+	stream.end(buffer);
 })
 
 const video= await prisma.video.create({
@@ -75,10 +75,9 @@ const video= await prisma.video.create({
 })
 return NextResponse.json({video},{status:201});
 
-
-
 } catch (error) {
-	console.log(error);
+	console.log("Error uploading video",error);
+	NextResponse.json({error:"Internal server err"},{status:500})
 	
 }
 }

@@ -18,11 +18,11 @@ type socialFormat= keyof typeof socialFormats
 
 export default function page(){
 
-	const [uploadedImage,setUploadedImage]=useState<string | null>("null");
+	const [uploadedImage,setUploadedImage]=useState<string | null>(null);
 	const [selectedFormat,setSelectedFormat]=useState<socialFormat>("Instagram Square (1:1)")
-	const[isTransforming,setTransforming]=useState(true);
-	const[transformed,setTransformed]=useState(true);
-	const [isUploading,setIsUploading]=useState(true);
+	const[isTransforming,setTransforming]=useState(false);
+	const[transformed,setTransformed]=useState(false);
+	const [isUploading,setIsUploading]=useState(false);
 	const imageRef= useRef<HTMLImageElement>(null);
 
 
@@ -31,7 +31,6 @@ export default function page(){
 		if(uploadedImage){
 			setTransforming(true);
 		}
-
 
 	},[selectedFormat,uploadedImage])
 
@@ -86,10 +85,14 @@ export default function page(){
 
 	}
 
-	return (
-		<div className='text-black flex flex-col gap-14'>			
 
-				<div className='flex flex-col gap-4'>
+
+
+
+	return (
+		<div className='text-black flex flex-col gap-10  '>			
+
+				<div className='flex flex-col gap-6 '>
 				<h1 className='font-bold md:text-6xl text-3xl text-dark-600'>
 						IMAGE RESIZE
 					</h1>
@@ -115,14 +118,15 @@ export default function page(){
 
 					{
 						uploadedImage && (
-							<div>
+							<div className=''>
 							
 
-								<div>
+								<div className='mb-4 '>
 									<select 
 									name=""		
 									 id=""
 									 onChange={(e)=>setSelectedFormat(e.target.value as socialFormat)}
+									 className=''
 									 >
 										{
 											Object.keys(socialFormats).map((format)=>(
@@ -137,38 +141,33 @@ export default function page(){
 							
 
 				<div>					
-					<div className='bg-red-500 flex gap-8 '>
-						<div className='ring-2 ring-black' >
+					<div className=' flex gap-14 '>
+						<div className='' >
 
-						<h2>
+						<h2 className='font-semibold md:text-2xl text-1xl text-dark-600'>
 						Original Image
 							</h2>
 
 
-						{/* <CldImage
+						 <CldImage
 						width={300}
 						height={300}
 						sizes='50vw'
-						// src={uploadedImage}
-						src={Img.src}
+					 src={uploadedImage}
+						// src={Img.src}
 						alt="original image"
 						gravity="auto"
-						/> */}
-						<Image 
-						src={image} 
-						alt="Example"
-        width={300} // Desired width
-        height={500}
-		 />
+						/> 
+						
 						</div>
 
 					{
 						transformed &&(
-							<div className='ring-2 ring-black'>
-								<h2>
+							<div className=' '>
+								<h2 className='font-semibold md:text-3xl text-1xl text-dark-600'>
 								   Transformed Image
 							   </h2>
-							   {/* <CldImage
+							    <CldImage
 								   width={socialFormats[selectedFormat].width}
 								   height={socialFormats[selectedFormat].height}
 								   src={uploadedImage}
@@ -179,13 +178,8 @@ export default function page(){
 								   gravity='auto'
 								   ref={imageRef}
 								   onLoad={() => setTransforming(false)}
-								   />  */}
-								   <Image 
-						src={image} 
-						alt="Example"
-        width={300} // Desired width
-        height={500}
-		 />
+								   />  
+								 
 							</div>
 
 						)
@@ -193,14 +187,16 @@ export default function page(){
 				</div>
 				</div>
 
-				<div className='flex  flex-col gap-6 mt-4'>
-					<button onClick={()=>{
+				<div className='flex  flex-col gap-6 mt-4 '>
+					<button className='bg-slate-800 p-2 w-full'
+					onClick={()=>{
 						setTransformed(true)
 					}}>
 						APPLY CHANGES
 					</button>
 
-					<button onClick={handleDownload}>
+					<button  className='w-full bg-slate-800' p-2
+					onClick={handleDownload}>
 						DOWNLOAD
 					</button>
 				</div>
