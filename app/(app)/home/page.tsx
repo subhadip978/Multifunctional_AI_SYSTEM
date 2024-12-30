@@ -59,10 +59,13 @@ export default function page(){
 					</div>
 
 				):(
-					<>
+					<div >
+					<h1>video is available</h1> 
 					{
 						videos.map((video)=>{
-							<div>
+							return(
+
+							<div className=''>
 								<VideoCard 
 								key={video.id}
 								video={video}
@@ -70,9 +73,10 @@ export default function page(){
 
 								/>
 							</div>
+							)
 						})
 					}
-					</>
+					</div>
 
 				)}
 

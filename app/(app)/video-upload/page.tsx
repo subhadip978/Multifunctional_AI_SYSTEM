@@ -16,6 +16,7 @@ const VideoUpload = () => {
   const [title,setTitle]=useState("");
   const [description,setDescription]=useState("");
 
+   const[isUploading,setIsUploading]= useState(false);
 
   const router= useRouter();
 
@@ -29,6 +30,7 @@ const VideoUpload = () => {
       return ;
     }
 
+      setIsUploading(true)
     const formData= new FormData();
     formData.append('file',file);
     formData.append('title',title);
@@ -36,13 +38,13 @@ const VideoUpload = () => {
     formData.append('originalSize',file.size.toString());
 
       try {
-        await axios.post("/api/video-upload",{
-          formData
-        })
+        await axios.post("/api/video-upload",formData)
         
       } catch (error) {
         console.log(error);
         
+      }finally{
+        setIsUploading(true)
       }
 
 

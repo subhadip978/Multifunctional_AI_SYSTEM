@@ -27,6 +27,7 @@ export  async function POST(request:NextRequest){
 	if(!userId){
 		return NextResponse.json({error:"UnAthorized"},{status:401})
 	}
+	console.log("userid is ",userId)
 
 	try {
 
@@ -43,6 +44,7 @@ export  async function POST(request:NextRequest){
 
 	const bytes= await file.arrayBuffer()
 	const buffer=Buffer.from(bytes);
+	console.log("started upload to cloudinary")
 	
 	const result = await new Promise<CloudinaryResult>((resolve,reject)=>{		
 		const stream=cloudinary.uploader.upload_stream(

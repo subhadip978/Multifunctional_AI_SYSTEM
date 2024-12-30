@@ -43,8 +43,13 @@ export default function AppLayout({
 					<li></li>
 				</ul>
 			</nav>
-	 <div className='flex  h-screen min-w-[200px]'>
 
+
+			<div className='flex'>
+
+	 <div className='flex  h-screen min-w-[200px] '>
+
+			
 
 		<ul className='flex flex-col space-y-6'>
 
@@ -66,8 +71,9 @@ export default function AppLayout({
 		}
 		</ul>
 	</div>
-		<div className='flex-1'>
+		<div className='flex-1 '>
 		 {children} 
+		</div>
 		</div>
 	</div>
   )

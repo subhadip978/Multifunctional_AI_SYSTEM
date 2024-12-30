@@ -75,23 +75,27 @@ const VideoCard:React.FC<VideoCardProps> = ({video,onDownload}) => {
 
 
   return (
-	<div className='' onMouseEnter={()=>setIsHovered(true)}>		
+	<div className=' border-2  card'
+	 onMouseEnter={()=>setIsHovered(true)}
+	 onMouseLeave={()=>setIsHovered(false)}>		
+			<figure className='border-2 border-slate-600 w-60 '>
 		{
 			isHovered?(
-				<div>
 					<video
 					src={getPreviewVideoUrl(video.publicId)}
 					autoPlay
 					muted
-					className=''
+					
+					className='w-full h-full  object-cover'
 					/>
-				</div>
+				
 			):(
 				<>
-				<img src={getThumbNailUrl(video.publicId)} alt="" />
+				<img src={getThumbNailUrl(video.publicId)} alt="" className='w-full h-full  object-cover' />
 				</>
 			)
 		}
+		</figure>
 		<div>
 			video duration{formatDuration(video.duration)}
 		</div>
@@ -104,9 +108,9 @@ const VideoCard:React.FC<VideoCardProps> = ({video,onDownload}) => {
 
 		<div>
 			<span>original size{formatSize(video.originalSize)} </span>
-			<span>compressed size </span>
+			<span>compressed size {formatSize(video.compressedSize)} </span>
 
-			<p>compressed percentage {formatSize(video.compressedSize)}</p>
+			<p>compressed percentage {compressionPercentage}%</p>
 
 			
 			<button onClick={()=>onDownload(getFullVideoUrl(video.publicId),video.title)}>DOWNLOAD</button>

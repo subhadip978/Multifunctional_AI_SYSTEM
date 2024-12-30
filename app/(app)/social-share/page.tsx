@@ -147,31 +147,38 @@ export default function page(){
 						<h2 className='font-semibold md:text-2xl text-1xl text-dark-600'>
 						Original Image
 							</h2>
-
+							<div className='border-2 border-black w-52 '>
 
 						 <CldImage
 						width={300}
 						height={300}
 						sizes='50vw'
 					 src={uploadedImage}
-						// src={Img.src}
+						
 						alt="original image"
 						gravity="auto"
 						/> 
+						</div>
 						
 						</div>
+						
 
-					{
-						transformed &&(
 							<div className=' '>
-								<h2 className='font-semibold md:text-3xl text-1xl text-dark-600'>
+								<h2 className='font-semibold md:text-2xl text-1xl text-dark-600'>
 								   Transformed Image
 							   </h2>
+							   
+														   <div className='border-2 border-black w-56 h-40 p-2'>
+					{
+						transformed &&(
+							   
+
+							
 							    <CldImage
 								   width={socialFormats[selectedFormat].width}
 								   height={socialFormats[selectedFormat].height}
 								   src={uploadedImage}
-								//    sizes="50vw"
+								    sizes="50vw"
 								   alt="transformed image"
 								   crop="fill"
 								   aspectRatio={socialFormats[selectedFormat].aspectRatio}
@@ -179,11 +186,13 @@ export default function page(){
 								   ref={imageRef}
 								   onLoad={() => setTransforming(false)}
 								   />  
-								 
-							</div>
-
-						)
-					}
+								   
+								   
+								   )
+								}
+								</div>
+								</div>
+					     
 				</div>
 				</div>
 
