@@ -18,8 +18,8 @@ datasource db {
 
 
 model Video{
-
   id              String @id @default(cuid())
+  userId          String?
   title           String
   description     String?
   publicId        String
@@ -30,20 +30,10 @@ model Video{
   updatedAt       DateTime @updatedAt
 }
 
-
-
-
-
-
-
-
-
-
 model Doc{
   id            Int      @id @default(autoincrement())
+  userId        String?
   title         String
   description   String
-  embedding     Unsupported("vector(3)")?
-
+  embedding     Unsupported("vector(768)")?
 }
-
